@@ -1,0 +1,31 @@
+
+BROKER SCHEMA CommonLibrary
+
+CREATE COMPUTE MODULE CommonOperations
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders(INOUT OutputRoot REFERENCE, INOUT InputRoot REFERENCE) BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage(INOUT OutputRoot REFERENCE, INOUT InputRoot REFERENCE) BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+
+	CREATE PROCEDURE pCopyMainHeaders(INOUT OutputRoot REFERENCE, INOUT InputRoot REFERENCE) BEGIN
+		CALL CopyMessageHeaders(OutputRoot,InputRoot);
+		CALL CopyEntireMessage(OutputRoot,InputRoot);
+	END;
+
+END MODULE;
