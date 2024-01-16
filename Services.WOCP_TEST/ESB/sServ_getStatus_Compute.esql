@@ -1,16 +1,16 @@
-BROKER SCHEMA CommonLibrary
 
 
-CREATE COMPUTE MODULE PrepareRestHeader_PrepareHeader
+BROKER SCHEMA ESB
+
+CREATE COMPUTE MODULE sServ_getStatus_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
-		
-		--nothing happens here; no changes
-		
+		CALL CopyMessageHeaders();
+		CALL CopyEntireMessage();
+		CREATE LASTCHILD OF OutputRoot.JSON.Data NAME 'systemId' VALUE '9000';
+		CREATE LASTCHILD OF OutputRoot.JSON.Data NAME 'systemName' VALUE 'HAL9000';
 		RETURN TRUE;
-	END;
+	END;	
 
 	CREATE PROCEDURE CopyMessageHeaders() BEGIN
 		DECLARE I INTEGER 1;

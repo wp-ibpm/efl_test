@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: WOCP_TEST_API
+  description: WOCP_TEST_API
+  version: 0.0.1
+servers:
+  - url: http://localhost/wocp_test/v1
+paths:
+  /getStatus:
+    get:
+      operationId: getStatus
+      parameters:
+      - name: transactionId
+        in: query
+        description: Transaction id
+        required: true
+        schema:
+          type: string
+
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStatusResponse'
+      security:
+      - api_key: []
+      x-codegen-request-body-name: request
+ 
+components:
+  schemas:
+    GetStatusResponse:
+      title: GetStatusResponse
+      required:
+        - systemId
+        - systemName
+      type: object
+      properties:
+        systemId:
+          type: string
+          description: identyfikator systemu
+        systemName:
+          type: string
+          description: nazwa systemu
+
